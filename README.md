@@ -2,7 +2,7 @@
 
 Turn any long PDF into **executive-style bullet summaries** with **retrieval + summarization**, fully in **Google Colab (free)**.
 
-## 🎯 What this shows recruiters
+##  What this shows:
 - **AI Engineering:** PDF parsing → chunking (465 chunks) → **embeddings** (MiniLM-L6-v2) → **FAISS** vector search → **summarization** (BART).
 - **Prompt Engineering:** XML structure, grounding rules, page-citation mindset.
 - **Debugging:** Fixed token overflow (512), repetition loops, and “Not in document” false negatives by adjusting context and swapping models.
@@ -10,7 +10,7 @@ Turn any long PDF into **executive-style bullet summaries** with **retrieval + s
 
 ---
 
-## 🧩 Architecture (mini-RAG)
+## Architecture (mini-RAG)
 PDF → pypdf (pages) → chunk(900/150 overlap)
 → SentenceTransformers embeddings (MiniLM-L6-v2)
 → FAISS index (cosine)
@@ -21,7 +21,7 @@ PDF → pypdf (pages) → chunk(900/150 overlap)
 
 ---
 
-## 🚀 Quickstart (Colab)
+##  Quickstart (Colab)
 1. Open **Google Colab** → New Notebook.
 2. Install:
    ```python
@@ -100,7 +100,7 @@ Sample Output
 
 
 
-Tech Stack
+**Tech Stack**
 
 Python, Google Colab
 
@@ -109,7 +109,7 @@ pypdf, sentence-transformers (MiniLM-L6-v2), faiss-cpu
 transformers, facebook/bart-large-cnn
 
 
-Troubleshooting Notes
+**Troubleshooting Notes**
 
 Token overflow (512 limit) → reduce retrieved context; use shorter outputs.
 
@@ -117,7 +117,7 @@ Repeating outputs (“self-sabotage…”) → switch to facebook/bart-large-cnn
 
 “Not in document” everywhere → ask concrete topical queries (e.g., perfectionism), not meta prompts.
 
-Structure
+**Structure**
 research-assistant-mini-rag/
 ├─ notebooks/
 │  └─ mini_rag_colab.ipynb
