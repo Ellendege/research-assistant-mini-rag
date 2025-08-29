@@ -27,7 +27,7 @@ PDF → pypdf (pages) → chunk(900/150 overlap)
    ```python
    !pip -q install pypdf faiss-cpu sentence-transformers transformers accelerate einops
 
-load models
+**Load Models**
 
 from sentence_transformers import SentenceTransformer
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, pipeline
@@ -39,12 +39,12 @@ generator_tok = AutoTokenizer.from_pretrained(GEN_MODEL)
 generator = AutoModelForSeq2SeqLM.from_pretrained(GEN_MODEL)
 gen = pipeline("summarization", model=generator, tokenizer=generator_tok)
 
-Upload your PDF
+**Upload your PDF**
 from google.colab import files
 up = files.upload()
 pdf_path = list(up.keys())[0]
 
-Parse → chunk:
+**Parse → chunk:**
 from pypdf import PdfReader; import re
 def load_pdf_pages(path):
     r = PdfReader(path); pages=[]
@@ -67,7 +67,7 @@ def chunk_text(text, page, size=900, overlap=150):
 docs=[]
 for p in pages: docs += chunk_text(p["text"], p["page"])
 
-Embeddings → FAISS:
+**Embeddings → FAISS:**
 import numpy as np, faiss
 def embed_texts(texts):
     v = embedder.encode(texts, convert_to_numpy=True, normalize_embeddings=True, show_progress_bar=True)
@@ -76,7 +76,7 @@ corpus = [d["chunk"] for d in docs]
 embs = embed_texts(corpus)
 index = faiss.IndexFlatIP(embs.shape[1]); index.add(embs)
 
-Retrieve → summarize:
+**Retrieve → summarize:**
 
 def retrieve(q, k=6):
     qv = embed_texts([q]); D,I = index.search(qv,k)
@@ -118,13 +118,21 @@ Repeating outputs (“self-sabotage…”) → switch to facebook/bart-large-cnn
 “Not in document” everywhere → ask concrete topical queries (e.g., perfectionism), not meta prompts.
 
 **Structure**
+
 research-assistant-mini-rag/
+
 ├─ notebooks/
+
 │  └─ mini_rag_colab.ipynb
+
 ├─ samples/
+
 │  ├─ output_executive_summary.md
+
 │  └─ used_context.txt
+
 ├─ README.md
+
 └─ LICENSE
 
 
